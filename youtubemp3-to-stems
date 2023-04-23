@@ -1,0 +1,33 @@
+import yt_dlp
+import os
+from spleeter.separator import Separator
+
+# YouTube video URL'si
+url = "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+
+# Kaydedilecek klasör adı
+klasor_adi = "mp3ler"
+
+# Yüksek kaliteli MP3 indir ve klasöre kaydet
+ydl_opts = {
+    'format': 'bestaudio/best',
+    'outtmpl': f'{klasor_adi}/%(title)s.%(ext)s',
+    'postprocessors': [{
+        'key': 'FFmpegExtractAudio',
+        'preferredcodec': 'mp3',
+        'preferredquality': '192',
+    }],
+}
+with yt_dlp.YoutubeDL(ydl_opts) as ydl:
+    ydl.download([url])
+
+# MP3 dosyasını yükle
+mp3_dosya = f"{klasor_adi}/{ydl.extract_info(url, download=False)['title']}.mp3"
+
+# Enstrümanlara ayır
+separator = Separator('spleeter:4stems')
+separator.separate_to_file(mp3_dosya, klasor_adi)
+
+# Ayrılmış enstrüman dosyalarının adlarını yazdır
+for dosya in os.listdir(klasor_adi):
+    print(dosya)
