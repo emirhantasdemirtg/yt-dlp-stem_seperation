@@ -8,7 +8,7 @@ import os
 from spleeter.separator import Separator
 
 # YouTube video URL'si
-url = ("lütfen indirmek istediğin şarkının urlsini gir")
+url = input("lütfen indirmek istediğin şarkının urlsini gir")
 
 # Kaydedilecek klasör adı
 klasor_adi = "mp3ler"
